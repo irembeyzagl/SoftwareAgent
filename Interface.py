@@ -522,3 +522,34 @@ def secilen_eleman(event):
                         return headers, table_data
 
                 def show_table(headers, data):
+                        tree = ttk.Treeview(tab6)
+                        tree["columns"] = headers
+                        tree["show"] = "headings"
+
+                        # Configure Treeview columns using headers array
+                        for header in headers:
+                            tree.heading(header, text=header)
+                            tree.column(header, anchor="center")
+
+                        # Insert data into Treeview using data array
+                        for row in data:
+                            tree.insert("", "end", values=row)
+
+                        # Set width and height for the Treeview
+                        tree.place(x=350, y=100, width=1000, height=500)
+                        
+
+                    # Örnek bir web sitesinden tablo verisi çekme
+                url = "https://www.tcmb.gov.tr/wps/wcm/connect/tr/tcmb+tr/main+menu/temel+faaliyetler/para+politikasi/merkez+bankasi+faiz+oranlari/faiz-oranlari"
+                headers, table_data = get_table_data(url)
+
+                    # Tabloyu gösterme
+                show_table(headers, table_data)
+                                
+                
+listbox6.bind("<ButtonRelease-1>", secilen_eleman)  # lambda kullanmaya gerek yok
+# Sekme kontrolünü ana pencereye yerleştir
+tab_control.pack(expand=1, fill="both")
+
+# Pencereyi göster
+window.mainloop()
