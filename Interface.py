@@ -221,3 +221,28 @@ labelveri6.place(x=1100,y=480)
 labelveri7=tk.Label(tab1,text=text7)
 labelveri7.place(x=1100,y=530)
 
+inputURL = tk.Entry(tab2, width=100)
+inputURL.place(x=500,y=15)
+buttonURL = tk.Button(tab2, text="Search", command=buton_click)
+buttonURL.place(x=1200,y=13)
+listbox = tk.Listbox(tab2, selectmode=tk.SINGLE, height="43")
+listbox.place(x=10, y=90)
+for item in items:
+        listbox.insert(tk.END, item)
+listbox.bind("<ButtonRelease-1>", on_item_click)
+columns = header
+tree1 = ttk.Treeview(tab2, columns=columns, show='headings')
+for col in columns:
+    tree1.heading(col, text=col)
+    tree1.column(col, width=300)
+tree1.place(x=150, y=90)
+tree2 = ttk.Treeview(tab2, columns=columns, show='headings')
+for col in columns:
+    tree2.heading(col, text=col)
+    tree2.column(col, width=300)
+tree2.place(x=150,y=325)
+tree3 = ttk.Treeview(tab2, columns=columns, show='headings')
+for col in columns:
+    tree3.heading(col, text=col)
+    tree3.column(col, width=300)
+tree3.place(x=150,y=560)
