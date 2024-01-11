@@ -16,7 +16,46 @@ import csv
 import UpdateListBox
 import UpdateData
 
+header = [""," "," "," "," "," "]
+items=[]
+UpdateData.update_data()
+UpdateListBox.update()
 
+
+
+with open("List of Corps.csv", 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        items.append(row[0])
+
+def on_item_click(event):
+    for row in tree1.get_children():
+        tree1.delete(row)
+    selected_item = listbox.get(listbox.curselection())
+    with open(f"{selected_item}_balance_sheet.csv", 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            tree1.insert('', 'end', values=row)
+    for row in tree2.get_children():
+        tree2.delete(row)
+    with open(f"{selected_item}_income_statement.csv", 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            tree2.insert('', 'end', values=row)
+    for row in tree3.get_children():
+        tree3.delete(row)
+    with open(f"{selected_item}_cash_flow.csv", 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            tree3.insert('', 'end', values=row)
+
+def buton_click():
+    name = inputURL.get()
+    if name in items:
+        sc.scrap(name)
+    else:
+        sc.scrap(name)
+        listbox.insert(tk.END, name)
 
 
 
