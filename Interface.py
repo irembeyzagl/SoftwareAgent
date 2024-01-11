@@ -100,3 +100,85 @@ def plot(event):
 window = tk.Tk()
 window.title("Project")
 window.geometry("1920x1080")
+
+# Stil oluştur
+style = ttk.Style()
+
+# Sekme boyutunu artırmak için stil konfigürasyonu yap
+style.configure("TNotebook.Tab", padding=(50,10))
+
+# Sekmeleri oluştur
+tab_control = ttk.Notebook(window)
+
+tab1 = ttk.Frame(tab_control)
+tab2 = ttk.Frame(tab_control)
+tab3 = ttk.Frame(tab_control)
+tab4 = ttk.Frame(tab_control)
+tab5 = ttk.Frame(tab_control)
+tab6=ttk.Frame(tab_control)
+
+# Sekme başlıklarını belirle
+tab_control.add(tab1, text='Home Page')
+tab_control.add(tab2, text='Financial Statements')
+tab_control.add(tab3, text='Company Information')
+tab_control.add(tab4, text='Summary Reports')
+tab_control.add(tab6,text="Inflation/Interest")
+tab_control.add(tab5, text="Admin")
+
+data=ScrapLive.scrap()
+content_label = tk.Label(tab1, text="Welcome!", font=("Arial", 24), padx=50, pady=50)
+content_label.pack(pady=20)
+
+label=tk.Label(tab1,text="What we are doing?",font=("Arial", 18))
+label.place(x=280,y=180)
+
+label_metin=tk.Label(tab1,text="We are show to you the companies balace sheets, \n financial tables and news.")
+label_metin.place(x=270,y=250)
+
+label2=tk.Label(tab1,text="Why you should use?",font=("Arial", 18))
+label2.place(x=660,y=180)
+
+label_metin2=tk.Label(tab1,text="If you take care of with the companies \n for example you want to make investments \n you can look at this data.")
+label_metin2.place(x=665,y=250)
+        
+label3=tk.Label(tab1,text="Index",font=("Arial",18 ))
+label3.place(x=1100,y=180)
+
+    
+text1=data[0][0]+" Değeri = "+data[0][1]+" Artış/Azalış Oranı= "
+text2=data[1][0]+" Değeri = "+data[1][1]+" Artış/Azalış Oranı= "
+text3=data[2][0]+" Değeri = "+data[2][1]+" Artış/Azalış Oranı= "
+text4=data[3][0]+" Değeri = "+data[3][1]+" Artış/Azalış Oranı= "
+text5=data[4][0]+" Değeri = "+data[4][1]+" Artış/Azalış Oranı= "
+text6=data[5][0]+" Değeri = "+data[5][1]+" Artış/Azalış Oranı= "
+text7=data[6][0]+" Değeri = "+data[6][1]+" Artış/Azalış Oranı= "
+yekle=180
+xekle=1330
+xx=1330
+for i in range(7):
+    artis_azalis_orani_str_without_percent = data[i][2].rstrip('%').replace(',', '.')
+    artis_azalis_orani_float = float(artis_azalis_orani_str_without_percent)
+    yekle=yekle+50
+    xekle=xekle+3
+    xx=xx+3
+    if artis_azalis_orani_float > 0 :
+        labelveri1_1=tk.Label(tab1,text=data[i][2],fg="green")
+        labelveri1_1.place(x=xekle,y=yekle)
+    if artis_azalis_orani_float < 0 :
+        labelveri1_1=tk.Label(tab1,text=data[i][2],fg="red")
+        labelveri1_1.place(x=xx,y=yekle)
+labelveri=tk.Label(tab1,text=text1)
+labelveri.place(x=1100,y=230)
+labelveri2=tk.Label(tab1,text=text2)
+labelveri2.place(x=1100,y=280)
+labelveri3=tk.Label(tab1,text=text3)
+labelveri3.place(x=1100,y=330)
+labelveri4=tk.Label(tab1,text=text4)
+labelveri4.place(x=1100,y=380)
+labelveri5=tk.Label(tab1,text=text5)
+labelveri5.place(x=1100,y=430)
+labelveri6=tk.Label(tab1,text=text6)
+labelveri6.place(x=1100,y=480)
+labelveri7=tk.Label(tab1,text=text7)
+labelveri7.place(x=1100,y=530)
+

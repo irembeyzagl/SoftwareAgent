@@ -5,3 +5,5 @@ info="fork işlemi karmaşık dosyalarda önemli aslında tek metin varsa direk 
 print(info)
 print(info)#Enes
 #HÜSS
+ilker
+raşit
