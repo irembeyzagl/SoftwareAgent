@@ -315,3 +315,54 @@ company_names = [a.text.strip() for a in soup.find_all('a', class_='sirket-adi')
 
 # Create a Listbox to display company names
 company_listbox = tk.Listbox(tab3)
+def update_listbox2():
+    updated_data_list = []
+    with open("List of Corps.csv", 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            updated_data_list.append(row[0])
+
+        new_items = [item for item in updated_data_list if item not in company_listbox.get(0, "end")]
+        
+        # Listbox'ta olmayan yeni öğeleri ekle
+        company_listbox.delete(0, "end")
+        for item in updated_data_list:
+                company_listbox.insert("end", item)
+        
+        # Belirli aralıklarla güncelleme işlemini tekrarla
+    window.after(5000, update_listbox2)
+for item in items:
+        company_listbox.insert(tk.END, item)
+        update_listbox2()
+company_listbox.place(x=5, y=50,width=45)
+company_listbox.bind("<<ListboxSelect>>", on_company_selected)
+
+
+
+
+
+
+#Sekme 4 içeriği
+listbox2 = tk.Listbox(tab4, selectmode=tk.SINGLE, height="43")
+listbox2.place(x=10, y=90)
+def update_listbox():
+    updated_data_list = []
+    with open("List of Corps.csv", 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            updated_data_list.append(row[0])
+
+        new_items = [item for item in updated_data_list if item not in listbox2.get(0, "end")]
+        
+        # Listbox'ta olmayan yeni öğeleri ekle
+        listbox2.delete(0, "end")
+        for item in updated_data_list:
+                listbox2.insert("end", item)
+        
+        # Belirli aralıklarla güncelleme işlemini tekrarla
+    window.after(5000, update_listbox)
+for item in items:
+        listbox2.insert(tk.END, item)
+        update_listbox()
+listbox2.bind("<ButtonRelease-1>", plot)
+
