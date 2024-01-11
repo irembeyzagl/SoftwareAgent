@@ -470,3 +470,55 @@ def secilen_eleman(event):
                         table_data.append(row_data)
 
                     return headers, table_data
+                    def show_table(headers, data):
+                    
+
+                    tree = ttk.Treeview(tab6)
+                    tree.place(x=350,y=100,width=1000, height=500)
+                    tree["columns"] = headers
+                    tree["show"] = "headings"
+
+                    for header in headers:
+                        tree.heading(header, text=header)
+                        tree.column(header, anchor="center")
+
+                    for row in data:
+                        tree.insert("", "end", values=row)
+
+                    
+
+                # Örnek bir web sitesinden tablo verisi çekme
+                url = "https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Istatistikler/Enflasyon+Verileri"
+                headers, table_data = get_table_data(url)
+
+                # Tabloyu gösterme
+                show_table(headers, table_data)
+            if selected_item=="Interest":
+                def get_table_data(url):
+                        response = requests.get(url)
+                        soup = BeautifulSoup(response.text, 'html.parser')
+
+                        # Tablo etiketini bulun
+                        table = soup.find('table')
+
+                        # Tablo içindeki satırları bulun
+                        rows = table.find_all('tr')
+
+                        # Başlık (header) satırını bulun
+                        header_row = rows[0]
+                        headers = [cell.text.strip() for cell in header_row.find_all(['th', 'td'])]
+
+                        # Veri satırlarını bulun
+                        data_rows = rows[1:]
+
+                        # Tablo verilerini saklamak için bir liste oluşturun
+                        table_data = []
+
+                        # Her bir veri satırını döngüye alın
+                        for row in data_rows:
+                            row_data = [cell.text.strip() for cell in row.find_all('td')]
+                            table_data.append(row_data)
+
+                        return headers, table_data
+
+                def show_table(headers, data):
