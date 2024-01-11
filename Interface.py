@@ -246,3 +246,72 @@ for col in columns:
     tree3.heading(col, text=col)
     tree3.column(col, width=300)
 tree3.place(x=150,y=560)
+def get_all_table_data(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find all tables on the page
+    tables = soup.find_all('table')
+
+    # Extract data from each table
+    all_table_data = []
+    for table in tables:
+        header_row = table.find('tr')
+        headers = [cell.text.strip() for cell in header_row.find_all(['th', 'td'])]
+
+        data_rows = table.find_all('tr')[1:]
+        table_data = []
+        for row in data_rows:
+            row_data = [cell.text.strip() for cell in row.find_all('td')]
+            table_data.append(row_data)
+
+        all_table_data.append({'headers': headers, 'data': table_data})
+
+    return all_table_data
+def clear_treeviews():
+    for widget in tab3.winfo_children():
+        if isinstance(widget, ttk.Treeview):
+            widget.destroy()
+def show_all_table_data(all_table_data):
+    clear_treeviews()
+    for table_data in all_table_data:
+        headers, data = table_data['headers'], table_data['data']
+        tree = ttk.Treeview(tab3)
+        tree.place(x=150,y=150,width=1000,height=500)
+        tree["columns"] = headers
+        tree["show"] = "headings"
+
+        for header in headers:
+            tree.heading(header, text=header)
+            tree.column(header, anchor="center")
+
+        for row in data:
+            tree.insert("", "end", values=row)
+
+        tree.pack(expand=False,padx=50,pady=20, fill="both")
+
+    
+
+def on_company_selected(event):
+    selected_index = company_listbox.curselection()
+    selected_company = company_listbox.get(selected_index)
+    selected_company_url = f"https://fintables.com/sirketler/{selected_company.upper()}/sirket-bilgileri"
+    
+    all_table_data = get_all_table_data(selected_company_url)
+    
+    if all_table_data:
+        show_all_table_data(all_table_data)
+    else:
+        print(f"No tables found for {selected_company} on {selected_company_url}")
+
+# Example website URL
+url = "https://fintables.com/sirketler/"
+
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# Extract company names from the page
+company_names = [a.text.strip() for a in soup.find_all('a', class_='sirket-adi')]
+
+# Create a Listbox to display company names
+company_listbox = tk.Listbox(tab3)
