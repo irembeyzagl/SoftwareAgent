@@ -6,3 +6,4 @@ print(info)
 print(info)#Enes
 #HÜSS
 ilker
+raşit
