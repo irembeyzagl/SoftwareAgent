@@ -365,4 +365,76 @@ for item in items:
         listbox2.insert(tk.END, item)
         update_listbox()
 listbox2.bind("<ButtonRelease-1>", plot)
+label3 = tk.Label(tab5, text="Admin Page",font=("Arial", 24))
+label3.place(x=660,y=50)
+def check_credentials():
+    entered_username = username_entry.get()
+    entered_password = password_entry.get()
 
+    # Kullanıcı adı ve şifreyi kontrol et
+    if entered_username == "admin" and entered_password == "password" or entered_password=="admin":
+        # Doğruysa admin sayfasını aç
+        open_admin_page()
+    else:
+        # Yanlışsa hata mesajı göster
+        messagebox.showerror("Error", "Invalid username or password")
+
+def open_admin_page():
+    #messagebox.showinfo("Başarılı", "Admin sayfası açıldı!")
+    def select_corps():
+        selected_index = listbox_admin.curselection()
+        selected_names = [listbox_admin.get(index) for index in selected_index]
+        label_update.config(text=UpdateData.sc_data_selected(selected_names))
+
+    for widget in tab5.winfo_children():
+        widget.destroy()
+    listbox_admin = tk.Listbox(tab5, selectmode=tk.MULTIPLE, height="43")
+    listbox_admin.place(x=10, y=90)
+    for item in items:
+        listbox_admin.insert(tk.END, item)
+    buton_selected_update = tk.Button(tab5, text="update selected companies", command=select_corps)
+    buton_selected_update.place(x=840, y= 250)
+    input_area = tk.Entry(tab5, width=30)
+    input_area.place(x=650,y=150)
+    label_update = tk.Label(tab5,text="")
+    label_update.place(x=650,y=300)
+    label=tk.Label(tab5,text="Next Update Date : ")
+    label.place(x=660,y=180)
+    label2=tk.Label(tab5,text=UpdateData.nud())
+    label2.place(x=770,y=180)
+    def get_input():
+        UpdateData.sc_data()
+        label_update.config(text="All Companies Updated")
+    button = tk.Button(tab5, text="Update Now", command=get_input) 
+    button.place(x=650,y=250)
+    def get_input2():
+        input_value2 = input_area.get()
+        print("Girilen Değer:", input_value2)
+        UpdateData.update(int(input_value2))
+        label2.config(text=UpdateData.nud())
+    button2 = tk.Button(tab5, text="Udpate Frequency", command=get_input2) 
+    button2.place(x=730,y=250)
+
+
+        
+    
+
+username_label = tk.Label(tab5, text="User Name:")
+username_label.place(x=600,y=150)
+username_entry = tk.Entry(tab5,width=30)
+username_entry.place(x=690,y=150)
+
+# Şifre etiketi ve giriş kutusu
+password_label = tk.Label(tab5, text="Password:")
+password_label.place(x=600,y=200)
+password_entry = tk.Entry(tab5, show="*",width=30)  # Şifreyi gösterme
+password_entry.place(x=690,y=200)
+
+# Giriş butonu
+login_button = Button(tab5, text="Log In", command=check_credentials)
+login_button.place(x=700,y=250)
+
+listbox6 = tk.Listbox(tab6,selectmode=tk.SINGLE)
+listbox6.insert(tk.END, "Inflation")
+listbox6.insert(tk.END, "Interest")
+listbox6.place(x=50, y=100)
