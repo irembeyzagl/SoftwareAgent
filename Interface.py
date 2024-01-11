@@ -438,3 +438,35 @@ listbox6 = tk.Listbox(tab6,selectmode=tk.SINGLE)
 listbox6.insert(tk.END, "Inflation")
 listbox6.insert(tk.END, "Interest")
 listbox6.place(x=50, y=100)
+def secilen_eleman(event):
+    selected_indices = listbox6.curselection()
+    if selected_indices:
+        for index in selected_indices:
+            selected_item = listbox6.get(index)
+            if selected_item=="Inflation":
+                def get_table_data(url):
+                    response = requests.get(url)
+                    soup = BeautifulSoup(response.text, 'html.parser')
+
+                    # Tablo etiketini bulun
+                    table = soup.find('table')
+
+                    # Tablo içindeki satırları bulun
+                    rows = table.find_all('tr')
+
+                    # Başlık (header) satırını bulun
+                    header_row = rows[0]
+                    headers = [header.text.strip() for header in header_row.find_all('th')]
+
+                    # Veri satırlarını bulun
+                    data_rows = rows[1:]  # İlk 5 satırı seçin
+
+                    # Tablo verilerini saklamak için bir liste oluşturun
+                    table_data = []
+
+                    # Her bir veri satırını döngüye alın
+                    for row in data_rows:
+                        row_data = [cell.text.strip() for cell in row.find_all('td')]
+                        table_data.append(row_data)
+
+                    return headers, table_data
