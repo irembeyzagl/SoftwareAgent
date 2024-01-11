@@ -4,3 +4,4 @@ print("hatta fork'a gerek de yok direk buradan da girip commit changes yaparsak 
 info="fork işlemi karmaşık dosyalarda önemli aslında tek metin varsa direk müdahele edilebilir"
 print(info)
 print(info)#Enes
+#HÜSS
