@@ -470,7 +470,7 @@ def secilen_eleman(event):
                         table_data.append(row_data)
 
                     return headers, table_data
-                    def show_table(headers, data):
+                def show_table(headers, data):
                     
 
                     tree = ttk.Treeview(tab6)
