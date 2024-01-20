@@ -1,3 +1,8 @@
+READ ME
+The search button disappears in some servers, so inputURL=tk.Entry(tab2,width=100) in intercafe.py line 224.
+If they reduce the width in the part, there will be no problem (example = 70)
+We think that the reason for this problem is version differences.
+
 Porject Name= Recommendation system and company valuation with agent collecting company historical data.
 
 Team Members:
